@@ -1,0 +1,17 @@
+.navigation {
+  display: block;
+  background-color: #444;
+}
+.navigation li {
+  display: inline-block;
+}
+.navigation .link  {
+  display: inline-block;
+  padding: 10px 30px;
+  color: #ffffff;
+  text-decoration: none;
+}
+.navigation .link.active,
+.navigation .link:hover  {
+  background-color: #666;
+}
