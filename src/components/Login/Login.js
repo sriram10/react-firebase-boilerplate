@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { addUserAction } from '../../store/actionTypes'
+
 import {SIGNUP, DASHBOARD} from '../../routesConfig'
 import './styles.css'
 
 import {userLogin} from '../../Firebase/authentication'
-
 
 class Login extends Component {
   state = {
@@ -17,8 +19,10 @@ class Login extends Component {
     e.preventDefault();
 
     userLogin(this.state.email, this.state.password)
-      .then((user) => {
-        console.log('SUCCESS', user)
+      .then((res) => {
+        console.log('SUCCESS', res.user)
+        localStorage.setItem('user', res.user.uid)
+        this.props.addUser(this.state);
         this.props.history.push(DASHBOARD)
       })
       .catch(err => {
@@ -72,4 +76,10 @@ class Login extends Component {
   }
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+  return {
+    addUser: (data) => dispatch(addUserAction(data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
